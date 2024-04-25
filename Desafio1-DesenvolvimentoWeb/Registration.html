@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Controle de Estacionamento</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <h1>Controle de Estacionamento</h1>
+
+    <div id="registration">
+        <h2>Registro de Reserva de Veículo</h2>
+        <form id="registrationForm">
+            <label for="licensePlate">Placa do veículo:</label>
+            <input type="text" id="licensePlate" required>
+
+            <label for="ownerName">Nome do proprietário:</label>
+            <input type="text" id="ownerName" required>
+
+            <label for="apartmentNumber">Número do apartamento:</label>
+            <input type="text" id="apartmentNumber" required>
+
+            <label for="block">Bloco do apartamento:</label>
+            <input type="text" id="block" required>
+
+            <label for="model">Modelo do veículo:</label>
+            <input type="text" id="model" required>
+
+            <label for="color">Cor do veículo:</label>
+            <input type="text" id="color" required>
+            
+            <label for="parkingSpaceNumber">Número da vaga de estacionamento:</label>
+            <input type="text" id="parkingSpaceNumber" required>
+            <br>
+            <button type="button" onclick="saveRegistration()" class="save">Salvar</button>
+        </form>
+    </div>
+<br>
+    <div class="button">
+        <button type="button" onclick="availableParkingSpacesPage()">Lista das vagas disponíveis</button>
+
+        <button type="button" onclick="listParkingSpacesPage()">Lista das vagas registradas</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
