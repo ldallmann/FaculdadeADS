@@ -32,6 +32,47 @@ const registration3 = {
 
 registeredParkingSpaces.push(registration1, registration2, registration3);
 
+window.onload = function () {
+        let url = window.location.href;
+        let fileName = url.substring(url.lastIndexOf('/') + 1);
+    
+        if (fileName === 'Registration.html') {
+            document.getElementById('registration').style.display = 'block';
+        }
+    
+        if (fileName === 'ListParkingSpaces.html') {
+            displayRegisteredParkingSpaces();
+        }
+    
+        if (fileName === 'AvailableParkings.html') {
+            displayAvailableParkingSpaces();
+        }
+    }
+
+function displayRegisteredParkingSpaces() {
+    const listRegisteredParkingSpaces = document.getElementById('registeredParkingSpaces');
+    listRegisteredParkingSpaces.innerHTML = '';
+
+    registeredParkingSpaces.forEach((parkingSpace, index) => {
+        const item = document.createElement('li');
+        item.textContent = `Placa do veículo: ${parkingSpace.plate}, Número da vaga: ${parkingSpace.parkingNumber}, Nome do proprietário: ${parkingSpace.name}`;
+
+        const deleteButton = document.createElement('button');
+        deleteButton.textContent = 'Excluir';
+        deleteButton.className = 'delete-button';
+        deleteButton.onclick = () => deleteParkingSpace(index);
+
+        item.appendChild(deleteButton);
+        listRegisteredParkingSpaces.appendChild(item);
+    });
+}
+
+function deleteParkingSpace(index) {
+    registeredParkingSpaces.splice(index, 1);
+    displayRegisteredParkingSpaces();
+}
+    
+
 function saveRegistration() {
     const plate = document.getElementById('licensePlate').value;
     const name = document.getElementById('ownerName').value;
@@ -42,7 +83,7 @@ function saveRegistration() {
     const parkingNumber = document.getElementById('parkingSpaceNumber').value;
 
     if (plate === '' || name === '' || apartmentNumber === '' || block === '' || model === '' || color === '' || parkingNumber === '') {
-        alert('Por favor, preencha todos os campos obrigatórios.');
+        alert('Por favor, preencha todos os campos.');
         return;
     }
 
@@ -64,28 +105,16 @@ function saveRegistration() {
     document.getElementById('registrationForm').reset();
 }
 
-function displayRegisteredParkingSpaces() {
-
-    const listRegisteredParkingSpaces = document.getElementById('registeredParkingSpaces');
-    listRegisteredParkingSpaces.innerHTML = '';
-
-    registeredParkingSpaces.forEach(parkingSpace => {
-        const item = document.createElement('li');
-        item.textContent = `Placa do veículo: ${parkingSpace.plate}, Nome do proprietário: ${parkingSpace.name}, Número da vaga: ${parkingSpace.parkingNumber}`;
-        listRegisteredParkingSpaces.appendChild(item);
-    });
-}
-
 function displayAvailableParkingSpaces() {
     const listAvailableParkings = document.getElementById('availableParkingSpaces');
     listAvailableParkings.innerHTML = '';
 
-    const totalParkingSpaces = 50;
+    const totalParkingSpaces = 20;
     const occupiedParkings = registeredParkingSpaces.length;
     const freeParkings = totalParkingSpaces - occupiedParkings;
 
     const item = document.createElement('li');
-    item.textContent = `Vagas ocupadas: ${occupiedParkings}, Vagas disponíveis: ${freeParkings}`;
+    item.textContent = `Vagas disponíveis: ${freeParkings}, Vagas ocupadas: ${occupiedParkings}`;
     listAvailableParkings.appendChild(item);
 }
 
@@ -99,21 +128,4 @@ function listParkingSpacesPage() {
 
 function availableParkingSpacesPage() {
     window.location.replace('AvailableParkings.html');
-}
-
-window.onload = function () {
-    let url = window.location.href;
-    let fileName = url.substring(url.lastIndexOf('/') + 1);
-
-    if (fileName === 'Registration.html') {
-        document.getElementById('registration').style.display = 'block';
-    }
-
-    if (fileName === 'ListParkingSpaces.html') {
-        displayRegisteredParkingSpaces();
-    }
-
-    if (fileName === 'AvailableParkings.html') {
-        displayAvailableParkingSpaces();
-    }
 }
