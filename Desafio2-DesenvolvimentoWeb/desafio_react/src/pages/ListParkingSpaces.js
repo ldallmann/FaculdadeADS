@@ -1,23 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles.css';
 
-function ListParkingSpaces({ registeredParkingSpaces = [] }) {
+function ListParkingSpaces({ initialParkingSpaces }) {
+  const [parkingSpaces, setParkingSpaces] = useState(initialParkingSpaces);
+
   const returnToRegistrationPage = () => {
     window.location.replace("/");
   };
 
-  registeredParkingSpaces = [
-    { plate: 'AAA-1234', parkingNumber: 1, name: 'Carlos' },
-    { plate: 'BBB-5678', parkingNumber: 2, name: 'Roberto' },
-  ];
+  const handleDelete = (index) => {
+    const updatedParkingSpaces = [...parkingSpaces];
+    updatedParkingSpaces.splice(index, 1);
+    setParkingSpaces(updatedParkingSpaces);
+  };
 
   return (
     <div>
       <h1>Vagas registradas</h1>
       <ul>
-        {registeredParkingSpaces.map((parkingSpace, index) => (
+        {parkingSpaces.map((parkingSpace, index) => (
           <li key={index}>
             Placa do veículo: {parkingSpace.plate}, Número da vaga: {parkingSpace.parkingNumber}, Nome do proprietário: {parkingSpace.name}
+            <button onClick={() => handleDelete(index)} className='buttonDelete'>Excluir</button>
           </li>
         ))}
       </ul>
@@ -27,5 +31,13 @@ function ListParkingSpaces({ registeredParkingSpaces = [] }) {
     </div>
   );
 }
+
+// Iniciando com dados fictícios
+ListParkingSpaces.defaultProps = {
+  initialParkingSpaces: [
+    { plate: 'AAA-1234', parkingNumber: 1, name: 'Carlos' },
+    { plate: 'BBB-5678', parkingNumber: 2, name: 'Roberto' }
+  ]
+};
 
 export default ListParkingSpaces;
